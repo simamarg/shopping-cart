@@ -25,9 +25,7 @@ var updateCart = function () {
 }
 
 var addItem = function (item) {
-  if (cart.indexOf(item) === -1) { // only add item if it's not in the cart yet
     cart.push(item);
-  }
 }
 
 var clearCart = function () {
