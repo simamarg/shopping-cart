@@ -17,8 +17,9 @@ var findItemIndexByName = function (name) {
 }
 
 var addItem = function (item) {
-  if (findItemIndexByName(item.name) > -1) {
-    item.quantity++;
+  var i = findItemIndexByName(item.name);
+  if (i > -1) {
+    cart[i].quantity++;
   } else {
     item.quantity = 1;
     cart.push(item);
