@@ -1,5 +1,14 @@
-// an array with all of our cart items
-var cart = [];
+var STORAGE_ID = 'shoppingcart';
+
+var saveToLocalStorage = function () {
+  localStorage.setItem(STORAGE_ID, JSON.stringify(cart));
+}
+
+var getFromLocalStorage = function () {
+  return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+}
+
+var cart = getFromLocalStorage();
 
 var findItemIndexByName = function (name) {
   return cart.findIndex(function (element) {
@@ -8,8 +17,9 @@ var findItemIndexByName = function (name) {
 }
 
 var addItem = function (item) {
-  if (findItemIndexByName(item.name) > -1) {
-    item.quantity++;
+  var i = findItemIndexByName(item.name);
+  if (i > -1) {
+    cart[i].quantity++;
   } else {
     item.quantity = 1;
     cart.push(item);
@@ -60,17 +70,20 @@ $('.view-cart').on('click', function () {
 $('.container').on('click', '.add-to-cart', function () {
   var item = $(this).closest('.item').data();
   addItem(item);
+  saveToLocalStorage();
   updateCart();
 });
 
 $('.clear-cart').on('click', function () {
   clearCart();
+  saveToLocalStorage();
   updateCart();
 });
 
 $('.container').on('click', '.remove-item', function () {
   var itemName = $(this).closest('p').data().name;
   removeItem(itemName);
+  saveToLocalStorage();
   updateCart();
 });
 
